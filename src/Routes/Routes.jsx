@@ -7,6 +7,8 @@ import OldMoneyPoloPage from "../Pages/OldMoneyPoloPage";
 import ProductDetailsPage from "../Pages/ProductDetailsPage";
 import CartPage from "../Pages/CartPage";
 import OrderReviewPage from "../Pages/OrderReviewPage";
+import Login from "../Pages/Login";
+import RegisterPage from "../Pages/Register";
 
 export const router = createBrowserRouter([
   {
@@ -37,6 +39,14 @@ export const router = createBrowserRouter([
       {
         path: "/order-review",
         element: <OrderReviewPage></OrderReviewPage>,
+      },
+      {
+        path: "/login",
+        element: <Login></Login>,
+      },
+      {
+        path: "/register",
+        element: <RegisterPage></RegisterPage>,
       },
     ],
   },
