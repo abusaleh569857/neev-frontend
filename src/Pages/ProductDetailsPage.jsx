@@ -57,7 +57,7 @@ const ProductDetailsPage = () => {
   };
 
   return (
-    <div className="container mx-auto px-4 py-6 font-sans">
+    <div className="container mx-auto px-4 py-6 font-sans mb-16 md:mb-2">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Left Image */}
         <div>

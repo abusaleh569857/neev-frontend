@@ -6,6 +6,7 @@ import DropShoulderPage from "../Pages/DropShoulderPage";
 import OldMoneyPoloPage from "../Pages/OldMoneyPoloPage";
 import ProductDetailsPage from "../Pages/ProductDetailsPage";
 import CartPage from "../Pages/CartPage";
+import OrderReviewPage from "../Pages/OrderReviewPage";
 
 export const router = createBrowserRouter([
   {
@@ -32,6 +33,10 @@ export const router = createBrowserRouter([
       {
         path: "/cart",
         element: <CartPage></CartPage>,
+      },
+      {
+        path: "/order-review",
+        element: <OrderReviewPage></OrderReviewPage>,
       },
     ],
   },
