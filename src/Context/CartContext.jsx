@@ -1,4 +1,3 @@
-// // CartContext.js
 // import { createContext, useState, useContext } from "react";
 
 // const CartContext = createContext();
@@ -6,62 +5,76 @@
 // export const CartProvider = ({ children }) => {
 //   const [cartItems, setCartItems] = useState([]);
 
-//   // ✅ Add to Cart
-//   const addToCart = (product, quantity = 1) => {
-//     const existingItem = cartItems.find((item) => item.id === product.id);
-//     if (existingItem) {
-//       setCartItems((prev) =>
-//         prev.map((item) =>
-//           item.id === product.id
-//             ? {
-//                 ...item,
-//                 quantity: Math.min(item.quantity + quantity, 5), // max 5
-//               }
-//             : item
-//         )
-//       );
+//   const addToCart = (product, quantity) => {
+//     const existingIndex = cartItems.findIndex(
+//       (item) => item.id === product.id && item.size === product.size
+//     );
+
+//     if (existingIndex !== -1) {
+//       const updatedItems = [...cartItems];
+//       updatedItems[existingIndex].quantity += quantity;
+//       setCartItems(updatedItems);
 //     } else {
 //       setCartItems((prev) => [
 //         ...prev,
-//         { ...product, quantity, size: "L" }, // default size
+//         { ...product, quantity: quantity || 1 },
 //       ]);
 //     }
 //   };
 
-//   // ✅ Increment quantity (max 5)
-//   const incrementItem = (itemId) => {
+//   const incrementItem = (id, size) => {
 //     setCartItems((prev) =>
 //       prev.map((item) =>
-//         item.id === itemId && item.quantity < 5
+//         item.id === id && item.size === size
 //           ? { ...item, quantity: item.quantity + 1 }
 //           : item
 //       )
 //     );
 //   };
 
-//   // ✅ Decrement quantity (min 1)
-//   const decrementItem = (itemId) => {
+//   const decrementItem = (id, size) => {
 //     setCartItems((prev) =>
-//       prev.map((item) =>
-//         item.id === itemId && item.quantity > 1
-//           ? { ...item, quantity: item.quantity - 1 }
-//           : item
-//       )
+//       prev
+//         .map((item) =>
+//           item.id === id && item.size === size
+//             ? { ...item, quantity: item.quantity - 1 }
+//             : item
+//         )
+//         .filter((item) => item.quantity > 0)
 //     );
 //   };
 
-//   // ✅ Remove item from cart
-//   const removeItem = (itemId) => {
-//     setCartItems((prev) => prev.filter((item) => item.id !== itemId));
+//   const removeItem = (id, size) => {
+//     setCartItems((prev) =>
+//       prev.filter((item) => !(item.id === id && item.size === size))
+//     );
 //   };
 
-//   // ✅ Update size (M / L / XL)
-//   const updateSize = (itemId, newSize) => {
-//     setCartItems((prev) =>
-//       prev.map((item) =>
-//         item.id === itemId ? { ...item, size: newSize } : item
-//       )
-//     );
+//   const updateSize = (id, oldSize, newSize) => {
+//     setCartItems((prev) => {
+//       const existingIndex = prev.findIndex(
+//         (item) => item.id === id && item.size === oldSize
+//       );
+
+//       if (existingIndex === -1) return prev;
+
+//       const duplicateIndex = prev.findIndex(
+//         (item) => item.id === id && item.size === newSize
+//       );
+
+//       const updatedItems = [...prev];
+
+//       if (duplicateIndex !== -1) {
+//         // Same product with new size already exists, so combine quantities
+//         updatedItems[duplicateIndex].quantity +=
+//           updatedItems[existingIndex].quantity;
+//         updatedItems.splice(existingIndex, 1); // remove old one
+//       } else {
+//         updatedItems[existingIndex].size = newSize;
+//       }
+
+//       return updatedItems;
+//     });
 //   };
 
 //   return (
@@ -80,15 +93,23 @@
 //   );
 // };
 
-// // ✅ Custom Hook
 // export const useCart = () => useContext(CartContext);
 
-import { createContext, useState, useContext } from "react";
+import { createContext, useState, useContext, useEffect } from "react";
 
 const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
-  const [cartItems, setCartItems] = useState([]);
+  // ✅ Step 1: Load cart from localStorage on initial render
+  const [cartItems, setCartItems] = useState(() => {
+    const storedCart = localStorage.getItem("cart");
+    return storedCart ? JSON.parse(storedCart) : [];
+  });
+
+  // ✅ Step 2: Save cart to localStorage whenever it changes
+  useEffect(() => {
+    localStorage.setItem("cart", JSON.stringify(cartItems));
+  }, [cartItems]);
 
   const addToCart = (product, quantity) => {
     const existingIndex = cartItems.findIndex(
@@ -162,6 +183,12 @@ export const CartProvider = ({ children }) => {
     });
   };
 
+  // ✅ Clear cart completely
+  const clearCart = () => {
+    setCartItems([]); // Clear from state
+    localStorage.removeItem("cart"); // Clear from localStorage
+  };
+
   return (
     <CartContext.Provider
       value={{
@@ -171,6 +198,7 @@ export const CartProvider = ({ children }) => {
         decrementItem,
         removeItem,
         updateSize,
+        clearCart,
       }}
     >
       {children}
@@ -178,4 +206,5 @@ export const CartProvider = ({ children }) => {
   );
 };
 
+// ✅ Hook to access cart context
 export const useCart = () => useContext(CartContext);
