@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { FaLock, FaPen } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import { useAuth } from "../Context/AuthContext";
 
 const Login = () => {
   const [mobile, setMobile] = useState("");
@@ -10,23 +10,35 @@ const Login = () => {
   const [error, setError] = useState("");
 
   const navigate = useNavigate();
+  const { login } = useAuth();
 
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+
+  //   try {
+  //     const res = await axios.post("http://localhost:5000/api/login", {
+  //       number: mobile,
+  //       password,
+  //     });
+
+  //     alert("✅ লগইন সফল হয়েছে");
+
+  //     // Example: Redirect to homepage
+  //     navigate("/");
+  //   } catch (err) {
+  //     const msg = err.response?.data?.message || "লগইন ব্যর্থ হয়েছে";
+  //     setError(msg);
+  //   }
+  // };
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const res = await login(mobile, password);
 
-    try {
-      const res = await axios.post("http://localhost:5000/api/login", {
-        number: mobile,
-        password,
-      });
-
+    if (res.success) {
       alert("✅ লগইন সফল হয়েছে");
-
-      // Example: Redirect to homepage
       navigate("/");
-    } catch (err) {
-      const msg = err.response?.data?.message || "লগইন ব্যর্থ হয়েছে";
-      setError(msg);
+    } else {
+      setError(res.message);
     }
   };
 

@@ -9,6 +9,7 @@ import CartPage from "../Pages/CartPage";
 import OrderReviewPage from "../Pages/OrderReviewPage";
 import Login from "../Pages/Login";
 import RegisterPage from "../Pages/Register";
+import AdminDashboard from "../DashBoard/AdminDashBoard";
 
 export const router = createBrowserRouter([
   {
@@ -47,6 +48,10 @@ export const router = createBrowserRouter([
       {
         path: "/register",
         element: <RegisterPage></RegisterPage>,
+      },
+      {
+        path: "/admin",
+        element: <AdminDashboard></AdminDashboard>,
       },
     ],
   },

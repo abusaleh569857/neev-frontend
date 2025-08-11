@@ -2,10 +2,11 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaUserPlus } from "react-icons/fa";
-import axios from "axios";
+import { useAuth } from "../Context/AuthContext";
 
 const RegisterPage = () => {
   const navigate = useNavigate();
+  const { register } = useAuth;
 
   const [formData, setFormData] = useState({
     name: "",
@@ -21,27 +22,44 @@ const RegisterPage = () => {
     setError(""); // reset error on input change
   };
 
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+
+  //   const { name, number, password, confirmPassword } = formData;
+
+  //   if (password !== confirmPassword) {
+  //     return setError("পাসওয়ার্ড ও কনফার্ম পাসওয়ার্ড মিলছে না");
+  //   }
+
+  //   try {
+  //     const res = await axios.post("http://localhost:5000/api/register", {
+  //       name,
+  //       number,
+  //       password,
+  //     });
+
+  //     alert("✅ রেজিস্ট্রেশন সফল হয়েছে!");
+  //     navigate("/login");
+  //   } catch (err) {
+  //     const msg = err.response?.data?.message || "রেজিস্ট্রেশন ব্যর্থ হয়েছে";
+  //     setError(msg);
+  //   }
+  // };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     const { name, number, password, confirmPassword } = formData;
 
     if (password !== confirmPassword) {
       return setError("পাসওয়ার্ড ও কনফার্ম পাসওয়ার্ড মিলছে না");
     }
 
-    try {
-      const res = await axios.post("http://localhost:5000/api/register", {
-        name,
-        number,
-        password,
-      });
-
+    const res = await register(name, number, password);
+    if (res.success) {
       alert("✅ রেজিস্ট্রেশন সফল হয়েছে!");
       navigate("/login");
-    } catch (err) {
-      const msg = err.response?.data?.message || "রেজিস্ট্রেশন ব্যর্থ হয়েছে";
-      setError(msg);
+    } else {
+      setError(res.message);
     }
   };
 
