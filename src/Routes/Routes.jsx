@@ -11,6 +11,8 @@ import Login from "../Pages/Login";
 import RegisterPage from "../Pages/Register";
 import AdminDashboard from "../DashBoard/AdminDashBoard";
 import ProductList from "../admin/ProductList";
+import AddProduct from "../admin/AddProduct";
+import EditProduct from "../admin/EditProduct";
 
 export const router = createBrowserRouter([
   {
@@ -53,6 +55,14 @@ export const router = createBrowserRouter([
       {
         path: "/admin/products",
         element: <ProductList></ProductList>,
+      },
+      {
+        path: "/admin/products/add",
+        element: <AddProduct></AddProduct>,
+      },
+      {
+        path: "//admin/products/edit/:id",
+        element: <EditProduct></EditProduct>,
       },
     ],
   },

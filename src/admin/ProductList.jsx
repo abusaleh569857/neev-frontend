@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { FaEdit, FaTrash, FaPlus, FaCheck, FaTimes } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const ProductList = () => {
   const navigate = useNavigate();
@@ -19,14 +20,29 @@ const ProductList = () => {
     loadProducts();
   }, []);
 
-  // Handle delete product
   const handleDelete = (id) => {
-    if (window.confirm("Are you sure you want to delete this product?")) {
-      axios
-        .delete(`http://localhost:5000/api/products/${id}`)
-        .then(() => loadProducts())
-        .catch((err) => console.error("Delete failed:", err));
-    }
+    Swal.fire({
+      title: "Are you sure?",
+      text: "This product will be permanently deleted!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#ff003c",
+      cancelButtonColor: "#888",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios
+          .delete(`http://localhost:5000/api/products/${id}`)
+          .then(() => {
+            Swal.fire("Deleted!", "The product has been deleted.", "success");
+            loadProducts();
+          })
+          .catch((err) => {
+            console.error("Delete failed:", err);
+            Swal.fire("Error", "Failed to delete product", "error");
+          });
+      }
+    });
   };
 
   return (
