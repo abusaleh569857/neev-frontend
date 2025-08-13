@@ -10,6 +10,7 @@ import OrderReviewPage from "../Pages/OrderReviewPage";
 import Login from "../Pages/Login";
 import RegisterPage from "../Pages/Register";
 import AdminDashboard from "../DashBoard/AdminDashBoard";
+import ProductList from "../admin/ProductList";
 
 export const router = createBrowserRouter([
   {
@@ -49,10 +50,10 @@ export const router = createBrowserRouter([
         path: "/register",
         element: <RegisterPage></RegisterPage>,
       },
-      // {
-      //   path: "/admin",
-      //   element: <AdminDashboard></AdminDashboard>,
-      // },
+      {
+        path: "/admin/products",
+        element: <ProductList></ProductList>,
+      },
     ],
   },
 ]);

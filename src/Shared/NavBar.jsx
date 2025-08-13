@@ -1,25 +1,28 @@
 // import React, { useState } from "react";
 // import {
-//   FaBars,
 //   FaSearch,
+//   FaBars,
 //   FaShoppingCart,
 //   FaUser,
-//   FaTimes,
 //   FaTruck,
 //   FaTachometerAlt,
+//   FaTimes,
 // } from "react-icons/fa";
 // import { NavLink } from "react-router-dom";
 // import { useCart } from "../context/CartContext";
 // import { useAuth } from "../Context/AuthContext";
 // import logo from "/public/logo.png";
+// import AdminSidebar from "../DashBoard/AdminSidebar";
 
 // const Navbar = () => {
 //   const [drawerOpen, setDrawerOpen] = useState(false);
+//   const [adminSidebarOpen, setAdminSidebarOpen] = useState(false);
+
 //   const { cartItems } = useCart();
-//   const { user } = useAuth(); // auth context থেকে user
-//   console.log("User Role : ", user);
+//   const { user } = useAuth();
 
 //   const cartCount = cartItems.reduce((acc, item) => acc + item.quantity, 0);
+
 //   const toggleDrawer = () => setDrawerOpen(!drawerOpen);
 
 //   const navLinks = [
@@ -34,7 +37,7 @@
 //     <>
 //       <header className="bg-white shadow w-full z-50 font-sans">
 //         <div className="flex items-center justify-between px-4 py-3 md:px-8">
-//           {/* Mobile Left: Hamburger Icon */}
+//           {/* Mobile Left: Drawer Toggle */}
 //           <div className="md:hidden">
 //             <button onClick={toggleDrawer}>
 //               <FaBars className="h-6 w-6 text-black" />
@@ -58,6 +61,7 @@
 
 //           {/* Desktop Header */}
 //           <div className="hidden md:flex w-full justify-between items-center px-6">
+//             {/* Logo */}
 //             <div className="flex justify-center">
 //               <img src={logo} alt="Logo" className="h-12" />
 //             </div>
@@ -84,14 +88,14 @@
 //                 Track Order
 //               </NavLink>
 
-//               {/* Admin link conditionally */}
+//               {/* Admin Link - Desktop */}
 //               {user && user.role === "admin" && (
-//                 <NavLink
-//                   to="/admin"
+//                 <button
+//                   onClick={() => setAdminSidebarOpen(true)}
 //                   className="flex items-center hover:text-[#ff003c]"
 //                 >
 //                   <FaTachometerAlt className="h-5 w-5 mr-1" /> Admin Dashboard
-//                 </NavLink>
+//                 </button>
 //               )}
 
 //               {!user && (
@@ -185,13 +189,15 @@
 
 //                 {/* Admin link in mobile drawer */}
 //                 {user && user.role === "admin" && (
-//                   <NavLink
-//                     to="/admin"
-//                     onClick={toggleDrawer}
+//                   <button
+//                     onClick={() => {
+//                       toggleDrawer();
+//                       setAdminSidebarOpen(true);
+//                     }}
 //                     className="flex items-center text-gray-700 hover:text-black"
 //                   >
 //                     <FaTachometerAlt className="mr-2" /> Admin Dashboard
-//                   </NavLink>
+//                   </button>
 //                 )}
 
 //                 {!user && (
@@ -208,6 +214,12 @@
 //           </div>
 //         </div>
 //       )}
+
+//       {/* Admin Sidebar */}
+//       <AdminSidebar
+//         isOpen={adminSidebarOpen}
+//         onClose={() => setAdminSidebarOpen(false)}
+//       />
 //     </>
 //   );
 // };
@@ -223,6 +235,7 @@ import {
   FaTruck,
   FaTachometerAlt,
   FaTimes,
+  FaSignOutAlt,
 } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 import { useCart } from "../context/CartContext";
@@ -235,11 +248,15 @@ const Navbar = () => {
   const [adminSidebarOpen, setAdminSidebarOpen] = useState(false);
 
   const { cartItems } = useCart();
-  const { user } = useAuth();
+  const { user, logout } = useAuth(); // ✅ logout function from AuthContext
 
   const cartCount = cartItems.reduce((acc, item) => acc + item.quantity, 0);
 
   const toggleDrawer = () => setDrawerOpen(!drawerOpen);
+
+  const handleLogout = () => {
+    logout(); // call logout from context
+  };
 
   const navLinks = [
     { name: "Home", path: "/" },
@@ -311,6 +328,16 @@ const Navbar = () => {
                   className="flex items-center hover:text-[#ff003c]"
                 >
                   <FaTachometerAlt className="h-5 w-5 mr-1" /> Admin Dashboard
+                </button>
+              )}
+
+              {/* ✅ Logout for normal user (desktop) */}
+              {user && user.role === "user" && (
+                <button
+                  onClick={handleLogout}
+                  className="flex items-center hover:text-[#ff003c]"
+                >
+                  <FaSignOutAlt className="h-5 w-5 mr-1" /> Logout
                 </button>
               )}
 
@@ -413,6 +440,19 @@ const Navbar = () => {
                     className="flex items-center text-gray-700 hover:text-black"
                   >
                     <FaTachometerAlt className="mr-2" /> Admin Dashboard
+                  </button>
+                )}
+
+                {/* ✅ Logout for normal user (mobile) */}
+                {user && user.role === "user" && (
+                  <button
+                    onClick={() => {
+                      handleLogout();
+                      toggleDrawer();
+                    }}
+                    className="flex items-center text-gray-700 hover:text-black"
+                  >
+                    <FaSignOutAlt className="mr-2" /> Logout
                   </button>
                 )}
 
