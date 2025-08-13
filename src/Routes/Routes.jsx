@@ -49,10 +49,10 @@ export const router = createBrowserRouter([
         path: "/register",
         element: <RegisterPage></RegisterPage>,
       },
-      {
-        path: "/admin",
-        element: <AdminDashboard></AdminDashboard>,
-      },
+      // {
+      //   path: "/admin",
+      //   element: <AdminDashboard></AdminDashboard>,
+      // },
     ],
   },
 ]);

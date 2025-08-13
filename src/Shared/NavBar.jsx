@@ -1,4 +1,4 @@
-// // import React, { useState } from "react";
+// import React, { useState } from "react";
 // import {
 //   FaBars,
 //   FaSearch,
@@ -6,17 +6,20 @@
 //   FaUser,
 //   FaTimes,
 //   FaTruck,
+//   FaTachometerAlt,
 // } from "react-icons/fa";
 // import { NavLink } from "react-router-dom";
 // import { useCart } from "../context/CartContext";
-// import logo from "/public/logo.png"; // Update if needed
+// import { useAuth } from "../Context/AuthContext";
+// import logo from "/public/logo.png";
 
 // const Navbar = () => {
 //   const [drawerOpen, setDrawerOpen] = useState(false);
 //   const { cartItems } = useCart();
+//   const { user } = useAuth(); // auth context থেকে user
+//   console.log("User Role : ", user);
 
 //   const cartCount = cartItems.reduce((acc, item) => acc + item.quantity, 0);
-
 //   const toggleDrawer = () => setDrawerOpen(!drawerOpen);
 
 //   const navLinks = [
@@ -81,13 +84,25 @@
 //                 Track Order
 //               </NavLink>
 
-//               <NavLink
-//                 to="/login"
-//                 className="flex items-center space-x-1 hover:text-[#ff003c]"
-//               >
-//                 <FaUser className="h-5 w-5" />
-//                 <span>Login / Sign Up</span>
-//               </NavLink>
+//               {/* Admin link conditionally */}
+//               {user && user.role === "admin" && (
+//                 <NavLink
+//                   to="/admin"
+//                   className="flex items-center hover:text-[#ff003c]"
+//                 >
+//                   <FaTachometerAlt className="h-5 w-5 mr-1" /> Admin Dashboard
+//                 </NavLink>
+//               )}
+
+//               {!user && (
+//                 <NavLink
+//                   to="/login"
+//                   className="flex items-center space-x-1 hover:text-[#ff003c]"
+//                 >
+//                   <FaUser className="h-5 w-5" />
+//                   <span>Login / Sign Up</span>
+//                 </NavLink>
+//               )}
 
 //               <NavLink to="/cart" className="relative">
 //                 <FaShoppingCart className="h-6 w-6 text-black" />
@@ -167,6 +182,27 @@
 //                     {link.name}
 //                   </NavLink>
 //                 ))}
+
+//                 {/* Admin link in mobile drawer */}
+//                 {user && user.role === "admin" && (
+//                   <NavLink
+//                     to="/admin"
+//                     onClick={toggleDrawer}
+//                     className="flex items-center text-gray-700 hover:text-black"
+//                   >
+//                     <FaTachometerAlt className="mr-2" /> Admin Dashboard
+//                   </NavLink>
+//                 )}
+
+//                 {!user && (
+//                   <NavLink
+//                     to="/login"
+//                     onClick={toggleDrawer}
+//                     className="flex items-center text-gray-700 hover:text-black"
+//                   >
+//                     <FaUser className="mr-2" /> Login / Sign Up
+//                   </NavLink>
+//                 )}
 //               </nav>
 //             </div>
 //           </div>
@@ -180,25 +216,29 @@
 
 import React, { useState } from "react";
 import {
-  FaBars,
   FaSearch,
+  FaBars,
   FaShoppingCart,
   FaUser,
-  FaTimes,
   FaTruck,
   FaTachometerAlt,
+  FaTimes,
 } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import { useAuth } from "../Context/AuthContext";
 import logo from "/public/logo.png";
+import AdminSidebar from "../DashBoard/AdminSidebar";
 
 const Navbar = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [adminSidebarOpen, setAdminSidebarOpen] = useState(false);
+
   const { cartItems } = useCart();
-  const { user } = useAuth; // auth context থেকে user
+  const { user } = useAuth();
 
   const cartCount = cartItems.reduce((acc, item) => acc + item.quantity, 0);
+
   const toggleDrawer = () => setDrawerOpen(!drawerOpen);
 
   const navLinks = [
@@ -213,7 +253,7 @@ const Navbar = () => {
     <>
       <header className="bg-white shadow w-full z-50 font-sans">
         <div className="flex items-center justify-between px-4 py-3 md:px-8">
-          {/* Mobile Left: Hamburger Icon */}
+          {/* Mobile Left: Drawer Toggle */}
           <div className="md:hidden">
             <button onClick={toggleDrawer}>
               <FaBars className="h-6 w-6 text-black" />
@@ -237,6 +277,7 @@ const Navbar = () => {
 
           {/* Desktop Header */}
           <div className="hidden md:flex w-full justify-between items-center px-6">
+            {/* Logo */}
             <div className="flex justify-center">
               <img src={logo} alt="Logo" className="h-12" />
             </div>
@@ -263,14 +304,14 @@ const Navbar = () => {
                 Track Order
               </NavLink>
 
-              {/* Admin link conditionally */}
+              {/* Admin Link - Desktop */}
               {user && user.role === "admin" && (
-                <NavLink
-                  to="/admin"
+                <button
+                  onClick={() => setAdminSidebarOpen(true)}
                   className="flex items-center hover:text-[#ff003c]"
                 >
                   <FaTachometerAlt className="h-5 w-5 mr-1" /> Admin Dashboard
-                </NavLink>
+                </button>
               )}
 
               {!user && (
@@ -364,13 +405,15 @@ const Navbar = () => {
 
                 {/* Admin link in mobile drawer */}
                 {user && user.role === "admin" && (
-                  <NavLink
-                    to="/admin"
-                    onClick={toggleDrawer}
+                  <button
+                    onClick={() => {
+                      toggleDrawer();
+                      setAdminSidebarOpen(true);
+                    }}
                     className="flex items-center text-gray-700 hover:text-black"
                   >
                     <FaTachometerAlt className="mr-2" /> Admin Dashboard
-                  </NavLink>
+                  </button>
                 )}
 
                 {!user && (
@@ -387,6 +430,12 @@ const Navbar = () => {
           </div>
         </div>
       )}
+
+      {/* Admin Sidebar */}
+      <AdminSidebar
+        isOpen={adminSidebarOpen}
+        onClose={() => setAdminSidebarOpen(false)}
+      />
     </>
   );
 };

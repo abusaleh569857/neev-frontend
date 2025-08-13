@@ -6,7 +6,7 @@ import { useAuth } from "../Context/AuthContext";
 
 const RegisterPage = () => {
   const navigate = useNavigate();
-  const { register } = useAuth;
+  const { register } = useAuth();
 
   const [formData, setFormData] = useState({
     name: "",
@@ -21,30 +21,6 @@ const RegisterPage = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
     setError(""); // reset error on input change
   };
-
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-
-  //   const { name, number, password, confirmPassword } = formData;
-
-  //   if (password !== confirmPassword) {
-  //     return setError("পাসওয়ার্ড ও কনফার্ম পাসওয়ার্ড মিলছে না");
-  //   }
-
-  //   try {
-  //     const res = await axios.post("http://localhost:5000/api/register", {
-  //       name,
-  //       number,
-  //       password,
-  //     });
-
-  //     alert("✅ রেজিস্ট্রেশন সফল হয়েছে!");
-  //     navigate("/login");
-  //   } catch (err) {
-  //     const msg = err.response?.data?.message || "রেজিস্ট্রেশন ব্যর্থ হয়েছে";
-  //     setError(msg);
-  //   }
-  // };
 
   const handleSubmit = async (e) => {
     e.preventDefault();

@@ -31,6 +31,8 @@ export const AuthProvider = ({ children }) => {
         password,
       });
 
+      console.log("User : ", res.data.user);
+
       setUser(res.data.user); // server থেকে আসা user object
       setLoading(false);
       return { success: true };

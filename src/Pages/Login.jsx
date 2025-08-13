@@ -12,24 +12,6 @@ const Login = () => {
   const navigate = useNavigate();
   const { login } = useAuth();
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-
-  //   try {
-  //     const res = await axios.post("http://localhost:5000/api/login", {
-  //       number: mobile,
-  //       password,
-  //     });
-
-  //     alert("✅ লগইন সফল হয়েছে");
-
-  //     // Example: Redirect to homepage
-  //     navigate("/");
-  //   } catch (err) {
-  //     const msg = err.response?.data?.message || "লগইন ব্যর্থ হয়েছে";
-  //     setError(msg);
-  //   }
-  // };
   const handleSubmit = async (e) => {
     e.preventDefault();
     const res = await login(mobile, password);
