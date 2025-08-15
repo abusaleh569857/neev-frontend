@@ -9,10 +9,15 @@ import CartPage from "../Pages/CartPage";
 import OrderReviewPage from "../Pages/OrderReviewPage";
 import Login from "../Pages/Login";
 import RegisterPage from "../Pages/Register";
-import AdminDashboard from "../DashBoard/AdminDashBoard";
+
 import ProductList from "../admin/ProductList";
-import AddProduct from "../admin/AddProduct";
+
 import EditProduct from "../admin/EditProduct";
+import AdminOrderPage from "../admin/AdminOrderPage";
+
+import PrivateRoute from "../components/PrivateRoute";
+import About from "../Pages/About";
+import SearchResults from "../components/SearchResults";
 
 export const router = createBrowserRouter([
   {
@@ -20,49 +25,48 @@ export const router = createBrowserRouter([
     element: <MainLayout></MainLayout>,
     errorElement: <ErrorPage></ErrorPage>,
     children: [
-      {
-        path: "/",
-        element: <Home></Home>,
-      },
-      {
-        path: "/drop-shoulder",
-        element: <DropShoulderPage></DropShoulderPage>,
-      },
-      {
-        path: "/old-money",
-        element: <OldMoneyPoloPage></OldMoneyPoloPage>,
-      },
-      {
-        path: "/product/:id",
-        element: <ProductDetailsPage></ProductDetailsPage>,
-      },
-      {
-        path: "/cart",
-        element: <CartPage></CartPage>,
-      },
-      {
-        path: "/order-review",
-        element: <OrderReviewPage></OrderReviewPage>,
-      },
-      {
-        path: "/login",
-        element: <Login></Login>,
-      },
-      {
-        path: "/register",
-        element: <RegisterPage></RegisterPage>,
-      },
+      { path: "/", element: <Home /> },
+      { path: "/drop-shoulder", element: <DropShoulderPage /> },
+      { path: "/old-money", element: <OldMoneyPoloPage /> },
+      { path: "/product/:id", element: <ProductDetailsPage /> },
+      { path: "/cart", element: <CartPage /> },
+      { path: "/order-review", element: <OrderReviewPage /> },
+      { path: "/login", element: <Login /> },
+      { path: "/register", element: <RegisterPage /> },
+      { path: "/about", element: <About /> },
+      { path: "/search", element: <SearchResults /> },
+
       {
         path: "/admin/products",
-        element: <ProductList></ProductList>,
+        element: (
+          <PrivateRoute adminOnly={true}>
+            <ProductList />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/admin/products/add",
-        element: <AddProduct></AddProduct>,
+        element: (
+          <PrivateRoute adminOnly={true}>
+            <EditProduct />
+          </PrivateRoute>
+        ),
       },
       {
-        path: "//admin/products/edit/:id",
-        element: <EditProduct></EditProduct>,
+        path: "/admin/products/edit/:id",
+        element: (
+          <PrivateRoute adminOnly={true}>
+            <EditProduct />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/admin/orders",
+        element: (
+          <PrivateRoute adminOnly={true}>
+            <AdminOrderPage />
+          </PrivateRoute>
+        ),
       },
     ],
   },

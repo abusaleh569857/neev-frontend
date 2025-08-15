@@ -20,23 +20,27 @@ const DropShoulder = () => {
 
   return (
     <div className="container mx-auto p-4 font-sans">
-      <h2 className="text-xl font-medium mb-4 font-sans pb-2 border-b-2 border-gray-200">
+      <h2 className="text-xl font-medium mb-4 pb-2 border-b-2 border-gray-200">
         Exclusive DropShoulder
       </h2>
+
       <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-6">
-        {products.map((product) => {
+        {products.map((product, index) => {
           const price = parseFloat(product.price) || 0;
           const discount = parseFloat(product.discount_percentage) || 0;
-          const discountedPrice = parseFloat(product.discountedPrice) || price;
+          const discountedPrice = Math.round(price - (price * discount) / 100);
 
           const isClicked =
-            clicked === product.id ? "border-[#ff003c]" : "border-gray-200";
+            clicked === product.variant_id
+              ? "border-[#ff003c]"
+              : "border-gray-200";
 
           return (
             <div
-              key={product.id}
-              onClick={() => setClicked(product.id)}
-              className={`relative bg-white rounded-lg shadow-md p-3 md:p-4 transition-all duration-300 border hover:border-[#ff003c] ${isClicked}`}
+              key={product.variant_id}
+              onClick={() => setClicked(product.variant_id)}
+              className={`relative bg-white rounded-lg shadow-md p-3 md:p-4 border hover:border-[#ff003c] opacity-0 transform translate-y-8 animate-card ${isClicked}`}
+              style={{ animationDelay: `${index * 100}ms` }} // staggered animation
             >
               {/* Discount Badge */}
               {discount > 0 && (
@@ -50,7 +54,7 @@ const DropShoulder = () => {
               <img
                 src={product.imageUrl}
                 alt={product.title}
-                className="w-full h-48 md:h-60 object-cover rounded-md mb-3 transform hover:scale-110 transition-transform duration-300 ease-in-out"
+                className="w-full h-48 md:h-60 object-cover rounded-md mb-3 transform hover:scale-105 transition-transform duration-300 ease-in-out"
               />
 
               {/* Product Title */}
@@ -58,7 +62,23 @@ const DropShoulder = () => {
                 {product.title}
               </h2>
 
-              {/* Price Section */}
+              {/* Color */}
+              <p className="text-center text-md mt-2 font-medium">
+                <span className="text-gray-600 mr-1">Color:</span>
+                <span className="text-[#ff003c] font-semibold">
+                  {product.color}
+                </span>
+              </p>
+
+              {/* Size */}
+              <p className="text-center text-md mt-1 font-medium">
+                <span className="text-gray-600 mr-1">Size:</span>
+                <span className="text-blue-600 font-semibold">
+                  {product.size}
+                </span>
+              </p>
+
+              {/* Price */}
               <div className="text-center mt-2">
                 <p className="text-blue-600 font-bold line-through inline-block mr-2">
                   ৳ {price}
@@ -68,9 +88,9 @@ const DropShoulder = () => {
                 </p>
               </div>
 
-              {/* Button */}
+              {/* Order Button */}
               <button
-                onClick={() => navigate(`/product/${product.id}`)}
+                onClick={() => navigate(`/product/${product.product_id}`)}
                 className="bg-[#ff003c] hover:bg-blue-600 text-white font-semibold mt-4 w-full py-2 rounded-sm"
               >
                 অর্ডার করুন

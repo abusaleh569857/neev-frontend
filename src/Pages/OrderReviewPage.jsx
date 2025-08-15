@@ -2,6 +2,7 @@ import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import Swal from "sweetalert2"; // Optional: nicer alert
+import axios from "axios";
 
 const OrderReviewPage = () => {
   const { cartItems, clearCart } = useCart(); // ✅ clearCart added here
@@ -21,19 +22,43 @@ const OrderReviewPage = () => {
   const grandTotal = total + deliveryCharge;
 
   const handleConfirmOrder = () => {
-    // ✅ Optional: You could also send cartItems to your backend here
+    const orderData = {
+      name,
+      phone,
+      address,
+      delivery_area: deliveryArea,
+      delivery_charge: deliveryCharge,
+      totalPrice: total,
+      grandTotal,
+      items: cartItems.map((item) => ({
+        productId: item.id,
+        title: item.title,
+        quantity: item.quantity,
+        price: item.discountedPrice,
+        size: item.size,
+        color: item.color,
+      })),
+      status: "pending", // you can update this later to shipped/delivered etc.
+      createdAt: new Date(),
+    };
 
-    clearCart(); // ✅ Clear cart from context and localStorage
-
-    // ✅ Show success message
-    Swal.fire({
-      icon: "success",
-      title: "অর্ডার কনফার্ম হয়েছে!",
-      text: "আমরা খুব শীঘ্রই আপনার সাথে যোগাযোগ করবো।",
-      confirmButtonText: "ঠিক আছে",
-    }).then(() => {
-      navigate("/"); // ✅ Redirect to home or order-success page
-    });
+    axios
+      .post("http://localhost:5000/api/orders", orderData)
+      .then(() => {
+        clearCart(); // Clear only after success
+        Swal.fire({
+          icon: "success",
+          title: "অর্ডার কনফার্ম হয়েছে!",
+          text: "আমরা খুব শীঘ্রই আপনার সাথে যোগাযোগ করবো।",
+          confirmButtonText: "ঠিক আছে",
+        }).then(() => {
+          navigate("/");
+        });
+      })
+      .catch((err) => {
+        console.error("Order submission failed:", err);
+        Swal.fire("Error", "অর্ডার পাঠাতে সমস্যা হয়েছে!", "error");
+      });
   };
 
   return (
