@@ -1,4 +1,3 @@
-import React from "react";
 import DropShoulder from "../components/DropShoulder";
 
 const DropShoulderPage = () => {

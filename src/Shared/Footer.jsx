@@ -7,7 +7,6 @@ const Footer = () => {
   return (
     <footer className="bg-[#ff003c] text-white pt-10 mb-20 md:mb-2 font-sans">
       <div className="container mx-auto px-4 md:px-6 grid grid-cols-1 md:grid-cols-3 gap-8">
-        {/* Brand Section */}
         <div className="flex flex-col items-start md:items-center">
           <img src={logo} alt="Neev Logo" className="w-20 h-20 mb-2" />
           <p className="text-white/90 text-center md:text-left">
@@ -15,7 +14,6 @@ const Footer = () => {
           </p>
         </div>
 
-        {/* Navigation Links */}
         <div className="flex flex-col items-start md:items-center">
           <h3 className="text-lg font-semibold mb-3 text-white pr-0 md:pr-6">
             Quick Links
@@ -48,7 +46,6 @@ const Footer = () => {
           </ul>
         </div>
 
-        {/* Contact Info */}
         <div className="flex flex-col items-start">
           <h3 className="text-lg font-semibold mb-3 text-white">Contact Us</h3>
           <a
@@ -66,7 +63,6 @@ const Footer = () => {
         </div>
       </div>
 
-      {/* Bottom */}
       <div className="border-t border-white/30 mt-10 pt-4 pb-6 text-center text-white/80 text-sm">
         &copy; {new Date().getFullYear()} Neev. All rights reserved.
       </div>

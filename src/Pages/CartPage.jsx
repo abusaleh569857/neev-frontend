@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useCart } from "../context/CartContext";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
@@ -31,7 +31,7 @@ const CartPage = () => {
   const handleOrderClick = () => {
     const newErrors = {
       name: !formName.trim(),
-      phone: !/^01[0-9]{9}$/.test(formPhone), // BD 11-digit number starting with 01
+      phone: !/^01[0-9]{9}$/.test(formPhone),
       address: !formAddress.trim(),
     };
 
@@ -60,7 +60,6 @@ const CartPage = () => {
   return (
     <div className="bg-[#f5f5f5] py-10 px-4 min-h-screen font-sans mb-16 md:mb-2">
       <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* Order Summary */}
         <div className="order-1 md:order-2 bg-white p-6 rounded shadow">
           <h2 className="text-lg font-bold mb-4">অর্ডারের তথ্য</h2>
 
@@ -144,7 +143,6 @@ const CartPage = () => {
           </div>
         </div>
 
-        {/* Order Form */}
         <div className="order-2 md:order-1 bg-white p-6 rounded shadow">
           <h2 className="text-lg font-bold text-center text-black mb-4">
             আপনার অর্ডারটি কনফার্ম করতে তথ্যগুলো পূরণ করে{" "}

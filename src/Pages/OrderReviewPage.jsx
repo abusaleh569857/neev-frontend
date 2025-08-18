@@ -1,11 +1,11 @@
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext";
-import Swal from "sweetalert2"; // Optional: nicer alert
+import Swal from "sweetalert2";
 import axios from "axios";
 
 const OrderReviewPage = () => {
-  const { cartItems, clearCart } = useCart(); // ✅ clearCart added here
+  const { cartItems, clearCart } = useCart();
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -38,14 +38,14 @@ const OrderReviewPage = () => {
         size: item.size,
         color: item.color,
       })),
-      status: "pending", // you can update this later to shipped/delivered etc.
+      status: "pending",
       createdAt: new Date(),
     };
 
     axios
       .post("http://localhost:5000/api/orders", orderData)
       .then(() => {
-        clearCart(); // Clear only after success
+        clearCart();
         Swal.fire({
           icon: "success",
           title: "অর্ডার কনফার্ম হয়েছে!",
@@ -68,7 +68,6 @@ const OrderReviewPage = () => {
           📋 অর্ডার কনফার্ম করার আগে নিচের তথ্যগুলো ভালোভাবে দেখে নিন
         </h1>
 
-        {/* কাস্টমার ইনফো */}
         <div className="mb-4 border-b pb-3">
           <p>
             <strong>📞 মোবাইল নাম্বার:</strong> {phone}
@@ -81,7 +80,6 @@ const OrderReviewPage = () => {
           </p>
         </div>
 
-        {/* পণ্য তালিকা */}
         <div>
           <h2 className="font-bold mb-2">🛍 আপনার পণ্যসমূহ:</h2>
           <table className="w-full text-sm border">
@@ -110,17 +108,15 @@ const OrderReviewPage = () => {
           </table>
         </div>
 
-        {/* মোট দাম */}
         <div className="mt-4 border-t pt-3 space-y-1 text-right">
           <div>মোট: ৳ {total}</div>
           <div>ডেলিভারি চার্জ: ৳ {deliveryCharge}</div>
           <div className="font-bold text-lg">সর্বমোট: ৳ {grandTotal}</div>
         </div>
 
-        {/* বাটন */}
         <div className="mt-6 flex flex-col md:flex-row gap-3 md:gap-4 justify-center">
           <button
-            onClick={handleConfirmOrder} // ✅ used here
+            onClick={handleConfirmOrder}
             className="bg-[#ff003c] hover:bg-[#e60036] text-white px-6 py-2 rounded font-bold"
           >
             ✅ অর্ডার কনফার্ম করুন

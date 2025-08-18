@@ -1,4 +1,3 @@
-import React from "react";
 import Navbar from "../Shared/NavBar";
 import { Outlet } from "react-router-dom";
 import HomeNavBar from "../components/HomeNavbar";

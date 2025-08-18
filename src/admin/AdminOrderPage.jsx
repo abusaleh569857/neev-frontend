@@ -54,7 +54,6 @@ const AdminOrdersPage = () => {
     <div className="p-4 mb-20 md:mb-4 bg-gray-50 min-h-screen">
       <h1 className="text-3xl font-bold text-[#ff003c] mb-6">All Orders</h1>
 
-      {/* Search Bar */}
       <div className="mb-6 flex w-full md:w-1/3 shadow-sm">
         <input
           type="text"
@@ -68,7 +67,6 @@ const AdminOrdersPage = () => {
         </button>
       </div>
 
-      {/* Orders */}
       {statusOrder.map(
         (status) =>
           groupedOrders[status].length > 0 && (
@@ -83,7 +81,6 @@ const AdminOrdersPage = () => {
                     key={order.orderId}
                     className="bg-white border border-gray-200 rounded-xl shadow-lg p-5 hover:shadow-xl transition"
                   >
-                    {/* Order Header */}
                     <div className="flex flex-col md:flex-row md:justify-between md:items-center border-b pb-3 mb-3">
                       <div>
                         <p className="text-base text-gray-600">
@@ -134,7 +131,6 @@ const AdminOrdersPage = () => {
                       </div>
                     </div>
 
-                    {/* Delivery Info */}
                     <div className="text-base space-y-1">
                       <p className="font-medium text-gray-800">
                         Delivery Info:
@@ -164,7 +160,6 @@ const AdminOrdersPage = () => {
                       </p>
                     </div>
 
-                    {/* Items */}
                     <div className="mt-4">
                       <p className="font-medium text-gray-800 mb-3">
                         Ordered Items:

@@ -1,11 +1,7 @@
-// src/Components/About.jsx
-import React from "react";
-
 const About = () => {
   return (
     <section className="bg-white text-gray-800 py-16 font-sans">
       <div className="container mx-auto px-4 md:px-6 flex flex-col md:flex-row items-start gap-12">
-        {/* Text Content */}
         <div className="space-y-6">
           <h2 className="text-3xl md:text-4xl font-bold text-[#ff003c] mb-6">
             আমাদের সম্পর্কে ✨
@@ -54,7 +50,6 @@ const About = () => {
             যুক্ত হচ্ছেন 💖।
           </p>
 
-          {/* CTA Button */}
           <a
             href="/"
             className="inline-block bg-[#ff003c] hover:bg-[#e60036] text-white font-semibold py-3 px-6 rounded-md transition-all duration-300"

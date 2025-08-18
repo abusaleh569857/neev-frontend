@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
@@ -19,7 +19,6 @@ const ProductDetailsPage = () => {
       .then((res) => setProduct(res.data))
       .catch((err) => console.error(err));
   }, [id]);
-  console.log("Product : ", product);
 
   if (!product) return <div className="text-center py-10">লোড হচ্ছে...</div>;
 
@@ -60,7 +59,6 @@ const ProductDetailsPage = () => {
   return (
     <div className="container mx-auto px-4 py-6 font-sans mb-16 md:mb-2">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* Left Image */}
         <div>
           <img
             src={product.imageUrl}
@@ -69,7 +67,6 @@ const ProductDetailsPage = () => {
           />
         </div>
 
-        {/* Right Info */}
         <div>
           <h1 className="text-2xl font-bold mb-2">{product.title}</h1>
 
@@ -89,7 +86,6 @@ const ProductDetailsPage = () => {
             Note: আমাদের অফিস সকাল ৮টা থেকে রাত ১১টা পর্যন্ত খোলা থাকে।
           </p>
 
-          {/* Sizes */}
           <div className="flex gap-2 mb-4">
             {["M", "L", "XL"].map((size) => (
               <button
@@ -106,7 +102,6 @@ const ProductDetailsPage = () => {
             ))}
           </div>
 
-          {/* Product Color */}
           {product.color && (
             <p className="text-sm mb-4">
               <strong>Color:</strong>{" "}
@@ -120,7 +115,6 @@ const ProductDetailsPage = () => {
             <strong>Brand:</strong> NEEV
           </p>
 
-          {/* Quantity Selector */}
           <div className="flex items-center mb-4">
             <button
               className="border px-4 py-2 text-md"
@@ -142,14 +136,12 @@ const ProductDetailsPage = () => {
             </button>
           </div>
 
-          {/* Message if quantity > 5 */}
           {message && (
             <div className="bg-yellow-200 text-black p-3 rounded mb-4 text-center font-bold">
               {message}
             </div>
           )}
 
-          {/* Order Buttons */}
           <div className="flex flex-col gap-3 mb-4">
             <div className="flex flex-col md:flex-row gap-3">
               <button
@@ -188,7 +180,6 @@ const ProductDetailsPage = () => {
         </div>
       </div>
 
-      {/* Description */}
       <div className="mt-10 bg-gray-100 p-4 rounded shadow">
         <h3 className="text-xl font-semibold mb-2">বিস্তারিত</h3>
         <p className="text-sm whitespace-pre-line">{product.description}</p>

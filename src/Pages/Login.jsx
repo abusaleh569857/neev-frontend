@@ -1,5 +1,4 @@
-// Login.jsx
-import React, { useState } from "react";
+import { useState } from "react";
 import { FaLock, FaPen } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../Context/AuthContext";
@@ -40,7 +39,6 @@ const Login = () => {
         )}
 
         <form onSubmit={handleSubmit} className="space-y-4">
-          {/* Mobile Number */}
           <div>
             <label className="block font-semibold mb-1">মোবাইল নাম্বার</label>
             <input
@@ -52,7 +50,6 @@ const Login = () => {
             />
           </div>
 
-          {/* Password */}
           <div>
             <label className="block font-semibold mb-1">পাসওয়ার্ড</label>
             <input
@@ -64,13 +61,11 @@ const Login = () => {
             />
           </div>
 
-          {/* Forgot Password */}
           <div className="text-sm flex items-center gap-2 cursor-pointer hover:text-[#ff003c] transition">
             <FaLock size={14} />
             <span>পাসওয়ার্ড ভুলে গেছেন?</span>
           </div>
 
-          {/* Login Button */}
           <button
             type="submit"
             className="w-full bg-[#ff003c] text-white font-bold py-2 rounded-md hover:bg-[#e00036] transition"
@@ -78,7 +73,6 @@ const Login = () => {
             লগিন
           </button>
 
-          {/* Register */}
           <div className="text-center text-sm">
             <p>একাউন্ট না থাকলে?</p>
             <button

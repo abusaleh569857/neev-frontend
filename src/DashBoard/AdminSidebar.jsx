@@ -1,5 +1,3 @@
-// src/components/AdminSidebar.jsx
-
 import {
   FaBox,
   FaUsers,
@@ -30,13 +28,11 @@ const AdminSidebar = ({ isOpen, onClose }) => {
 
   return (
     <>
-      {/* Overlay */}
       <div
         className="fixed inset-0 bg-black bg-opacity-40 z-40 md:hidden"
         onClick={onClose}
       />
 
-      {/* Sidebar */}
       <div
         className="fixed top-0 left-0 h-full w-1/2 sm:w-1/2 md:w-1/3 bg-white z-50 shadow-md flex flex-col"
         onClick={(e) => e.stopPropagation()}

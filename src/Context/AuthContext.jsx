@@ -1,11 +1,9 @@
-// src/context/AuthContext.js
 import { createContext, useState, useContext, useEffect } from "react";
 import axios from "axios";
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  // ✅ LocalStorage থেকে ইউজার লোড
   const [user, setUser] = useState(() => {
     const storedUser = localStorage.getItem("user");
     return storedUser ? JSON.parse(storedUser) : null;
@@ -13,7 +11,6 @@ export const AuthProvider = ({ children }) => {
 
   const [loading, setLoading] = useState(false);
 
-  // ✅ ইউজার পরিবর্তন হলে localStorage এ সেভ
   useEffect(() => {
     if (user) {
       localStorage.setItem("user", JSON.stringify(user));
@@ -22,7 +19,6 @@ export const AuthProvider = ({ children }) => {
     }
   }, [user]);
 
-  // ✅ Login Function
   const login = async (number, password) => {
     setLoading(true);
     try {
@@ -30,10 +26,7 @@ export const AuthProvider = ({ children }) => {
         number,
         password,
       });
-
-      console.log("User : ", res.data.user);
-
-      setUser(res.data.user); // server থেকে আসা user object
+      setUser(res.data.user);
       setLoading(false);
       return { success: true };
     } catch (err) {
@@ -45,7 +38,6 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // ✅ Register Function
   const register = async (name, number, password) => {
     setLoading(true);
     try {
@@ -65,7 +57,6 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // ✅ Logout Function
   const logout = () => {
     setUser(null);
     localStorage.removeItem("user");
@@ -87,5 +78,4 @@ export const AuthProvider = ({ children }) => {
   );
 };
 
-// ✅ Hook to use Auth Context
 export const useAuth = () => useContext(AuthContext);

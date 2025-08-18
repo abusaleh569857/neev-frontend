@@ -1,5 +1,4 @@
-// RegisterPage.jsx
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaUserPlus } from "react-icons/fa";
 import { useAuth } from "../Context/AuthContext";
@@ -19,7 +18,7 @@ const RegisterPage = () => {
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-    setError(""); // reset error on input change
+    setError("");
   };
 
   const handleSubmit = async (e) => {
@@ -50,14 +49,12 @@ const RegisterPage = () => {
           </h2>
         </div>
 
-        {/* Error message */}
         {error && (
           <div className="mb-4 text-center bg-red-100 text-red-700 p-2 rounded">
             {error}
           </div>
         )}
 
-        {/* Form */}
         <form onSubmit={handleSubmit} className="space-y-4">
           <input
             type="text"

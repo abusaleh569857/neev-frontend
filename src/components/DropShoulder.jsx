@@ -40,9 +40,8 @@ const DropShoulder = () => {
               key={product.variant_id}
               onClick={() => setClicked(product.variant_id)}
               className={`relative bg-white rounded-lg shadow-md p-3 md:p-4 border hover:border-[#ff003c] opacity-0 transform translate-y-8 animate-card ${isClicked}`}
-              style={{ animationDelay: `${index * 100}ms` }} // staggered animation
+              style={{ animationDelay: `${index * 100}ms` }}
             >
-              {/* Discount Badge */}
               {discount > 0 && (
                 <div className="absolute top-2 right-2 w-16 h-16 bg-[#ff003c] text-white text-center flex flex-col items-center justify-center rounded-full text-xs font-semibold leading-tight z-10">
                   <span className="text-sm pl-[5px]">{discount}%</span>
@@ -50,19 +49,16 @@ const DropShoulder = () => {
                 </div>
               )}
 
-              {/* Product Image */}
               <img
                 src={product.imageUrl}
                 alt={product.title}
                 className="w-full h-48 md:h-60 object-cover rounded-md mb-3 transform hover:scale-105 transition-transform duration-300 ease-in-out"
               />
 
-              {/* Product Title */}
               <h2 className="text-lg font-semibold text-center">
                 {product.title}
               </h2>
 
-              {/* Color */}
               <p className="text-center text-md mt-2 font-medium">
                 <span className="text-gray-600 mr-1">Color:</span>
                 <span className="text-[#ff003c] font-semibold">
@@ -70,7 +66,6 @@ const DropShoulder = () => {
                 </span>
               </p>
 
-              {/* Size */}
               <p className="text-center text-md mt-1 font-medium">
                 <span className="text-gray-600 mr-1">Size:</span>
                 <span className="text-blue-600 font-semibold">
@@ -78,7 +73,6 @@ const DropShoulder = () => {
                 </span>
               </p>
 
-              {/* Price */}
               <div className="text-center mt-2">
                 <p className="text-blue-600 font-bold line-through inline-block mr-2">
                   ৳ {price}
@@ -88,7 +82,6 @@ const DropShoulder = () => {
                 </p>
               </div>
 
-              {/* Order Button */}
               <button
                 onClick={() => navigate(`/product/${product.product_id}`)}
                 className="bg-[#ff003c] hover:bg-blue-600 text-white font-semibold mt-4 w-full py-2 rounded-sm"

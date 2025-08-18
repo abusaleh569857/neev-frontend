@@ -3,13 +3,11 @@ import { createContext, useState, useContext, useEffect } from "react";
 const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
-  // ✅ Step 1: Load cart from localStorage on initial render
   const [cartItems, setCartItems] = useState(() => {
     const storedCart = localStorage.getItem("cart");
     return storedCart ? JSON.parse(storedCart) : [];
   });
 
-  // ✅ Step 2: Save cart to localStorage whenever it changes
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(cartItems));
   }, [cartItems]);
@@ -74,10 +72,9 @@ export const CartProvider = ({ children }) => {
       const updatedItems = [...prev];
 
       if (duplicateIndex !== -1) {
-        // Same product with new size already exists, so combine quantities
         updatedItems[duplicateIndex].quantity +=
           updatedItems[existingIndex].quantity;
-        updatedItems.splice(existingIndex, 1); // remove old one
+        updatedItems.splice(existingIndex, 1);
       } else {
         updatedItems[existingIndex].size = newSize;
       }
@@ -86,10 +83,9 @@ export const CartProvider = ({ children }) => {
     });
   };
 
-  // ✅ Clear cart completely
   const clearCart = () => {
-    setCartItems([]); // Clear from state
-    localStorage.removeItem("cart"); // Clear from localStorage
+    setCartItems([]);
+    localStorage.removeItem("cart");
   };
 
   return (
@@ -109,5 +105,4 @@ export const CartProvider = ({ children }) => {
   );
 };
 
-// ✅ Hook to access cart context
 export const useCart = () => useContext(CartContext);

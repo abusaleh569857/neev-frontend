@@ -31,7 +31,7 @@ const Navbar = () => {
   const toggleDrawer = () => setDrawerOpen(!drawerOpen);
 
   const handleLogout = () => {
-    logout(); // call logout from context
+    logout();
   };
   const handleSearch = (e) => {
     e.preventDefault();
@@ -52,19 +52,16 @@ const Navbar = () => {
     <>
       <header className="bg-white shadow w-full z-50 font-sans">
         <div className="flex items-center justify-between px-4 py-3 md:px-8">
-          {/* Mobile Left: Drawer Toggle */}
           <div className="md:hidden">
             <button onClick={toggleDrawer}>
               <FaBars className="h-6 w-6 text-black" />
             </button>
           </div>
 
-          {/* Mobile Center: Logo */}
           <div className="md:hidden absolute left-1/2 transform -translate-x-1/2">
             <img src={logo} alt="Logo" className="h-10 w-auto" />
           </div>
 
-          {/* Mobile Right: Cart Icon */}
           <div className="md:hidden">
             <NavLink to="/cart" className="relative">
               <FaShoppingCart className="h-6 w-6 text-black" />
@@ -74,43 +71,31 @@ const Navbar = () => {
             </NavLink>
           </div>
 
-          {/* Desktop Header */}
           <div className="hidden md:flex w-full justify-between items-center px-6">
-            {/* Logo */}
             <div className="flex justify-center">
               <img src={logo} alt="Logo" className="h-12" />
             </div>
 
-            {/* Search Bar */}
             <div className="flex w-full max-w-xl border border-[#ff003c] rounded-md overflow-hidden bg-gray-100 mx-6">
-              {/* <input
-                type="text"
-                placeholder="Search Product..."
-                className="w-full px-4 py-2 text-gray-700 bg-transparent focus:outline-none text-sm"
-              /> */}
               <input
                 type="text"
                 placeholder="Search Product..."
-                value={searchTerm} // bind state
-                onChange={(e) => setSearchTerm(e.target.value)} // update state
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
                 className="w-full px-4 py-2 text-gray-700 bg-transparent focus:outline-none text-sm"
                 onKeyDown={(e) => {
-                  if (e.key === "Enter") handleSearch(e); // Enter press এ search হবে
+                  if (e.key === "Enter") handleSearch(e);
                 }}
               />
-              {/* 
-              <button className="bg-[#ff003c] px-4 py-2 flex items-center justify-center">
-                <FaSearch className="h-6 w-6 text-white" />
-              </button> */}
+
               <button
-                onClick={handleSearch} // button click এ search হবে
+                onClick={handleSearch}
                 className="bg-[#ff003c] px-4 py-2 flex items-center justify-center"
               >
                 <FaSearch className="h-6 w-6 text-white" />
               </button>
             </div>
 
-            {/* Icons */}
             <div className="flex items-center space-x-4">
               <NavLink
                 to="/track"
@@ -120,7 +105,6 @@ const Navbar = () => {
                 Track Order
               </NavLink>
 
-              {/* Admin Link - Desktop */}
               {user && user.role === "admin" && (
                 <button
                   onClick={() => setAdminSidebarOpen(true)}
@@ -130,7 +114,6 @@ const Navbar = () => {
                 </button>
               )}
 
-              {/* ✅ Logout for normal user (desktop) */}
               {user && user.role === "user" && (
                 <button
                   onClick={handleLogout}
@@ -160,7 +143,6 @@ const Navbar = () => {
           </div>
         </div>
 
-        {/* Mobile Search */}
         <div className="md:hidden px-4 pb-3">
           <div className="flex w-full border border-[#ff003c] rounded-md overflow-hidden bg-gray-100">
             <input
@@ -174,7 +156,6 @@ const Navbar = () => {
           </div>
         </div>
 
-        {/* Desktop Nav Links */}
         <div className="hidden md:flex justify-center items-center bg-[#ff003c] px-8 py-3">
           <nav className="flex justify-center space-x-6">
             {navLinks.map((link) => (
@@ -190,7 +171,6 @@ const Navbar = () => {
         </div>
       </header>
 
-      {/* Mobile Drawer */}
       {drawerOpen && (
         <div
           className="fixed inset-0 bg-black bg-opacity-30 z-40 font-sans"
@@ -229,7 +209,6 @@ const Navbar = () => {
                   </NavLink>
                 ))}
 
-                {/* Admin link in mobile drawer */}
                 {user && user.role === "admin" && (
                   <button
                     onClick={() => {
@@ -242,7 +221,6 @@ const Navbar = () => {
                   </button>
                 )}
 
-                {/* ✅ Logout for normal user (mobile) */}
                 {user && user.role === "user" && (
                   <button
                     onClick={() => {
@@ -270,7 +248,6 @@ const Navbar = () => {
         </div>
       )}
 
-      {/* Admin Sidebar */}
       <AdminSidebar
         isOpen={adminSidebarOpen}
         onClose={() => setAdminSidebarOpen(false)}
